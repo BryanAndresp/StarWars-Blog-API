@@ -17,3 +17,44 @@ class User(db.Model):
             "email": self.email,
             # do not serialize the password, its a security breach
         }
+
+class People(db.Model):
+    id=db.Column(db.Integer, primary_key=True)
+    name=db.Column(db.String(200), nullable=False)
+    gender=db.Column(db.String(200), nullable=False)
+    height=db.Column(db.String(200), nullable=False)
+    birth_year=db.Column(db.String(100), nullable=False)
+    hair_color=db.Column(db.String(200), nullable=False)
+    skin_color=db.Column(db.String(200), nullable=False)
+    eye_color=db.Column(db.String(200), nullable=False)
+
+    def serialize(self) :
+        return {
+           "id": self.id,
+           "name":self.id,
+           "gender":self.gender,
+           "height": self.height,
+           "birth_year":self.birth_year,
+           "hair_color":self.hair_color,
+           "skin_color":self.skin_color,
+           "eye_color":self.eye_color,
+        }
+class Planets(db.Model):
+    id=db.Column(db.Integer, primary_key=True)
+    name=db.Column(db.String(400),nullable=False)
+    diameter=db.Column(db.Integer,nullable=False)
+    climate=db.Column(db.String(400),nullable=False)
+    gravity=db.Column(db.String(400),nullable=False)
+    terrain=db.Column(db.String(400),nullable=False)
+    population=db.Column(db.Integer,nullable=False)
+    
+    def serialize(self):
+        return {
+            "id":self.id,
+            "name":self.name,
+            "diameter":self.diameter,
+            "climate":self.climate,
+            "gravity":self.gravity,
+            "terrain":self.terrain,
+            "population":self.population,
+        }
