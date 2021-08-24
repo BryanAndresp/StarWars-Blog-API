@@ -59,9 +59,14 @@ class Planets(db.Model):
             "population":self.population,
         }
 class Favorites(db.Model):
-    id=db.Column(db.Integer,primary_key=True)
-    people_id=db.Column(db.Integer, db.ForeingKey=("People.id"))
-    Planets_id=db.Column(db.Integer, db.ForeingKey=("Planets.id"))
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    user = db.relationship('User', backref=db.backref('my_favorite_list', lazy='dynamic'))
+    people_id = db.Column(db.Integer, db.ForeignKey('people.id'))
+    people = db.relationship('People', backref=db.backref('my_favorite_list', lazy='dynamic'))
+    planets_id = db.Column(db.Integer, db.ForeignKey('planets.id'))
+    planets = db.relationship('Planets', backref=db.backref('my_favorite_list', lazy='dynamic'))
+  
   
 
     def serialize(self):
