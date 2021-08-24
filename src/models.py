@@ -58,3 +58,15 @@ class Planets(db.Model):
             "terrain":self.terrain,
             "population":self.population,
         }
+class Favorites(db.Model):
+    id=db.Column(db.Integer,primary_key=True)
+    people_id=db.Column(db.Integer, db.ForeingKey=("People.id"))
+    Planets_id=db.Column(db.Integer, db.ForeingKey=("Planets.id"))
+  
+
+    def serialize(self):
+        return{
+            "id":self.id,
+            "people_id":self.people_id,
+            "planets_id":self.planets_id,
+        }
