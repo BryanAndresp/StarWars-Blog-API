@@ -3,6 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 db = SQLAlchemy()
 
 class User(db.Model):
+    
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(80), unique=False, nullable=False)
@@ -17,8 +18,9 @@ class User(db.Model):
         }
 
 class People(db.Model):
+    
     id=db.Column(db.Integer, primary_key=True)
-    name=db.Column(db.String(200), nullable=False)
+    name=db.Column(db.String(400), nullable=False)
     gender=db.Column(db.String(200), nullable=False)
     height=db.Column(db.String(200), nullable=False)
     birth_year=db.Column(db.String(100), nullable=False)
@@ -38,6 +40,7 @@ class People(db.Model):
            "eye_color":self.eye_color,
         }
 class Planets(db.Model):
+   
     id=db.Column(db.Integer, primary_key=True)
     name=db.Column(db.String(400),nullable=False)
     diameter=db.Column(db.Integer,nullable=False)
@@ -57,6 +60,7 @@ class Planets(db.Model):
             "population":self.population,
         }
 class Favorites(db.Model):
+     
      id = db.Column(db.Integer, primary_key=True)
      user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
      people_id = db.Column(db.Integer, db.ForeignKey('people.id'))

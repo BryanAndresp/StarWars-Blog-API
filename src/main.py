@@ -56,6 +56,24 @@ def getPeopleId(id):
     return jsonify(peopleId), 200
 
 
+@app.route('/planets', methods=['GET'])
+def getAllPlanets():
+    allplanets= Planets.query.all()
+    allplanets= list(map(lambda Planets: Planets.serialize(),allplanets))
+
+    return  jsonify(allplanets),200
+
+
+@app.route('/planets/<int:id>', methods=['GET'])
+def getPlanetsId(id):
+    planetsId= Planets.query.get(id)
+    if planetsId is None:
+        return {'msg':'This planet does not exist'}
+    planetsId= Planets.serialize(planetsId)
+
+    return jsonify(planetsId), 200
+
+
 
 
 
