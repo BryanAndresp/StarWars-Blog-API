@@ -39,6 +39,26 @@ def handle_hello():
 
     return jsonify(response_body), 200
 
+@app.route('/people', methods=['GET'])
+def getAllPeople():
+    allpeople= People.query.all()
+    allpeople= list(map(lambda People: People.serialize(),allpeople))
+
+    return  jsonify(allpeople),200
+
+@app.route('/people/<int:id>', methods=['GET'])
+def getPeopleId(id):
+    peopleId= People.query.get(id)
+    if peopleId is None:
+        return {'msg':'This member does not exist'}
+    peopleId= People.serialize(peopleId)
+
+    return jsonify(peopleId), 200
+
+
+
+
+
 # this only runs if `$ python src/main.py` is executed
 if __name__ == '__main__':
     PORT = int(os.environ.get('PORT', 3000))
