@@ -73,8 +73,87 @@ def getPlanetsId(id):
 
     return jsonify(planetsId), 200
 
+@app.route('/people', methods=['POST'])
+def createPeople():
+    name = request.json.get('name', None)
+    gender = request.json.get('gender', None)
+    height = request.json.get('height', None)
+    birth_year = request.json.get('birth_year', None)
+    hair_color = request.json.get('hair_color', None)
+    skin_color = request.json.get('skin_color', None)
+    eye_color = request.json.get('eye_color', None)
+      
+    if name is None:
+        return jsonify({'msg':'No name was provided'}), 400
+    if gender is None:
+        return jsonify({'msg':'No gender was provided'}), 400
+    if height is None:
+        return jsonify({'msg':'No height was provided'}), 400
+    if birth_year is None:
+        return jsonify({'msg':'No bird year was provided'}), 400
+    if skin_color is None:
+        return jsonify({'msg':'No skin color was provided'}), 400
+    if eye_color is None:
+        return jsonify({'msg':'No eye color was provided'}), 400
+
+    people = People.query.filter_by(name=name).first()
+    if people:
+       return jsonify({"msg":"people already exist"}), 401
+     
+    else:
+         new_people = People()
+         new_people.name = name
+         new_people.gender = gender
+         new_people.height = height
+         new_people.birth_year = birth_year
+         new_people.skin_color = skin_color
+         new_people.hair_color = hair_color
+         new_people.eye_color = eye_color
+         db.session.add(new_people)
+         db.session.commit()
+         
+         return jsonify({"msg": "people created successfully"}), 200
 
 
+@app.route('/planets', methods=['POST'])
+def createdPlanet():
+    name = request.json.get('name', None)
+    diameter = request.json.get('diameter', None)
+    climate = request.json.get('climate', None)
+    gravity = request.json.get('gravity', None)
+    terrain= request.json.get('terrain', None)
+    population = request.json.get('population', None)
+      
+    if name is None:
+        return jsonify({'msg':'No name was provided'}), 400
+    if diameter is None:
+        return jsonify({'msg':'No diameter was provided'}), 400
+    if climate is None:
+        return jsonify({'msg':'No climate was provided'}), 400
+    if gravity is None:
+        return jsonify({'msg':'No gravity was provided'}), 400
+    if terrain is None:
+        return jsonify({'msg':'No terrain was provided'}), 400
+    if population is None:
+        return jsonify({'msg':'No population was provided'}), 400
+
+    planets = Planets.query.filter_by(name=name).first()
+    if planets:
+        # the planet was found on the database
+        return jsonify({"msg": "Planet already exists"}), 401
+     
+    else:
+         new_planet = Planets()
+         new_planet.name = name
+         new_planet.diameter = diameter
+         new_planet.climate = climate
+         new_planet.gravity = gravity
+         new_planet.terrain = terrain
+         new_planet.population = population
+         db.session.add(new_planet)
+         db.session.commit()
+         
+         return jsonify({"msg": "planet created successfully"}), 200
 
 
 # this only runs if `$ python src/main.py` is executed
