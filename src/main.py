@@ -159,11 +159,15 @@ def createdPlanet():
 
 @app.route('/people:<int:id>', methods=['DELETE'])
 def deletePeople(id):
- person = People.query.get(id)
- person.delete()
- db.session.commit()
- return jsonify({"msg":"people successfully deleted"}), 200
-    
+    people = People.deletePeople(id)
+    return jsonify(people), 200
+
+
+@app.route('/planets:<int:id>', methods=['DELETE'])
+def deletePlanet(id):
+       planet= Planet.deletePlanet(id)
+       return jsonify (planet), 200
+
 # this only runs if `$ python src/main.py` is executed
 if __name__ == '__main__':
     PORT = int(os.environ.get('PORT', 3000))

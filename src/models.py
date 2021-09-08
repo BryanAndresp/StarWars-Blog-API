@@ -39,6 +39,13 @@ class People(db.Model):
            "skin_color":self.skin_color,
            "eye_color":self.eye_color,
         }
+
+    def deletePeople(id):
+        people = People.query.get(id)
+        db.session.delete(people)
+        db.session.commit()
+        return {"msg": "People was delete"}
+        
 class Planets(db.Model):
    
     id=db.Column(db.Integer, primary_key=True)
@@ -59,6 +66,12 @@ class Planets(db.Model):
             "terrain":self.terrain,
             "population":self.population,
         }
+    def deletePlanet(id):
+        planet = Planet.query.get(id)
+        db.session.delete(planet)
+        db.session.commit()
+        return {"msg": "People was delete"}
+    
 class Favorites(db.Model):
      
      id = db.Column(db.Integer, primary_key=True)
