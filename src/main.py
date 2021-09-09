@@ -55,6 +55,31 @@ def sign_in():
     access_token = create_access_token(identity=user.id)
     return jsonify({ "token": access_token, "user_id": user.id })
 
+@app.route('/register', methods =["POST"])
+def sign_up ():
+    email = request.json.get("email", None)
+    password = request.json.get("password", None)
+    # validation of possible empty inputs
+    if email is None:
+        return jsonify({"msg": "No email was provided"}), 400
+    if password is None:
+        return jsonify({"msg": "No password was provided"}), 400
+    # busca usuario en BBDD
+    user = User.query.filter_by(email=email).first()
+    if user:
+        # the user was not found on the database
+        return jsonify({"msg": "User already exists"}), 401
+    else:
+        # crea nuevo usuario
+        new_user = User()
+        new_user.email = email
+        new_user.password = password
+        # crea registro nuevo en BBDD de
+        db.session.add(new_user)
+        db.session.commit()
+        return jsonify({"msg": "User created successfully"}), 200
+
+
 
 
 
