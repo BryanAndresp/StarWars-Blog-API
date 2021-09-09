@@ -9,7 +9,7 @@ from flask_cors import CORS
 from utils import APIException, generate_sitemap
 from admin import setup_admin
 from models import db, User, People, Planets, Favorites
-from flask_jwt_extended import JWTManager, create_access_token
+from flask_jwt_extended import JWTManager, jwt_required, create_access_token
 #from models import Person
 
 app = Flask(__name__)
@@ -43,6 +43,7 @@ def handle_hello():
     return jsonify(response_body), 200
 
 @app.route('/login', methods= ["POST"])
+@jwt_required()
 def sign_in():
     email= request.json.get("email", None)
     password = request.json.get("password", None)
@@ -56,6 +57,7 @@ def sign_in():
     return jsonify({ "token": access_token, "user_id": user.id })
 
 @app.route('/register', methods =["POST"])
+@jwt_required()
 def sign_up ():
     email = request.json.get("email", None)
     password = request.json.get("password", None)
